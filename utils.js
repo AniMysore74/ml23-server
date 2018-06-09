@@ -47,6 +47,27 @@ exports.putGeofence = function(lat, lng, radius) {
     writeToMongo(body);
 }
 
+exports.putPolygonalGeofence = function(coords) {
+    let coordinates = [];
+    for(var x in coords) {
+        coordinates.push([ coords[x].lng , coords[x].lat]);
+    }
+    console.log([coordinates]);
+    let body  = { 
+        unique_id: 'geofence1',
+        name: 'Geofence',
+        location: { type: 'Polygon', coordinates: [coordinates] } 
+    }
+    writeToHypertrack(body);
+
+    body.type = 'geofence';
+    body.location = coords;
+    
+
+    writeToMongo(body);
+}
+
+
 exports.getLocs = async function() {
     
     
@@ -61,6 +82,24 @@ exports.getLocs = async function() {
         else
             resolve({geofence:geofence, places:places}); 
     })
+}
+
+exports.reset = function() {
+    return new Promise( (resolve, reject) => { 
+        MongoClient.connect(url)
+        .then(db=> {
+            db.db(database).collection(collection).drop()
+            .then( r=> {
+                db.db(database).createCollection(collection)
+                .then( r=> {
+                    resolve("Success");
+                })
+            })
+        })
+        .catch(er => {
+            reject("Error")
+        })
+    });
 }
 
 /**
