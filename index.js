@@ -52,8 +52,8 @@ app.post('/putPolygonalGeofence', (req,res) => {
         res.send('Posted!');
     }
 })
-
-s + associated data, center & radius of geofence 
+
+//Get Locations + associated data, center & radius of geofence 
 app.get('/getLocs', (req,res)=> { 
     console.log("getLocs");
     utils.getLocs()
