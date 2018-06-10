@@ -16,7 +16,7 @@ MongoClient.connect(url, function(err, db) {
 },options);
 
 
-exports.putCoord = function(unique_id, name, lat, lng, question, answer) {
+exports.putCoord = function(unique_id, name, lat, lng, question, answer,clue) {
     
     let body = { 
         unique_id: unique_id,
@@ -28,6 +28,7 @@ exports.putCoord = function(unique_id, name, lat, lng, question, answer) {
     body.type = 'marker';
     body.question = question;
     body.answer = answer;
+    body.clue = clue;
     
     writeToMongo(body);
 }

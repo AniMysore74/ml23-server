@@ -15,11 +15,11 @@ app.post('/putCoord', (req,res) => {
     console.log("putCoord\n"+  req.body);
     let p = req.body;
 
-    if(!p.unique_id || !p.name || !p.lat || !p.lng, !p.question, !p.answer) 
+    if(!p.unique_id || !p.name || !p.lat || !p.lng || !p.question || !p.answer || !p.clue) 
         res.status(500).send('Error! Insufficent parameters');
     else {
         try {
-            utils.putCoord(p.unique_id, p.name, p.lat, p.lng, p.question, p.answer);
+            utils.putCoord(p.unique_id, p.name, p.lat, p.lng, p.question, p.answer,p.clue);
             res.send('Posted!');
         }
         catch(Error){
@@ -52,8 +52,8 @@ app.post('/putPolygonalGeofence', (req,res) => {
         res.send('Posted!');
     }
 })
-
-// Get locations + associated data, center & radius of geofence 
+
+s + associated data, center & radius of geofence 
 app.get('/getLocs', (req,res)=> { 
     console.log("getLocs");
     utils.getLocs()
